@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "start": "yarn build && yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
