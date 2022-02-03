@@ -6,7 +6,10 @@ export class ServerController implements interfaces.Controller {
   constructor() {}
 
   @httpGet("/")
-  private index(@request() req: express.Request, @response() res: express.Response) {
+  private index(
+    @request() req: express.Request,
+    @response() res: express.Response
+  ): express.Response<any, Record<string, any>> {
     return res.status(200).send({
       message: "Hello World!",
     });
