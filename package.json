@@ -6,12 +6,24 @@
   "scripts": {
     "dev": "yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
     "build": "tsc -p .",
-    "start": "yarn build && yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts"
+    "start": "yarn build && yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
+    "lint": "eslint --fix ./src/**/*.ts",
+    "format": "prettier --write . --loglevel silent"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.4.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "axios": "^0.25.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-config-standard": "^16.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-unused-imports": "^1.0.1",
     "inversify": "^6.0.1",
     "inversify-binding-decorators": "^4.0.0",
     "inversify-express-utils": "^6.4.3",
@@ -21,6 +33,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1"
   }
