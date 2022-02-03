@@ -1,5 +1,3 @@
-import { TS } from "../translation/TranslationHelper";
-
 export class ApplicationError extends Error {
   public statusCode: number;
   public error: string;
@@ -8,7 +6,7 @@ export class ApplicationError extends Error {
 
     Error.captureStackTrace(this, this.constructor);
 
-    this.message = message || TS.translate("error", "genericError");
+    this.message = message || "Oops! Something went wrong!";
 
     this.statusCode = statusCode || 500;
   }
