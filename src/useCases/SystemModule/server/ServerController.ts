@@ -1,9 +1,10 @@
 import * as express from "express";
 import { controller, httpGet, interfaces, request, response } from "inversify-express-utils";
+import { BotHelper } from "../../../providers/Bot";
 
 @controller("/")
 export class ServerController implements interfaces.Controller {
-  constructor() {}
+  constructor(private botHelper: BotHelper) {}
 
   @httpGet("/")
   private index(
@@ -11,7 +12,7 @@ export class ServerController implements interfaces.Controller {
     @response() res: express.Response
   ): express.Response<any, Record<string, any>> {
     return res.status(200).send({
-      message: "Hello World!",
+      message: this.botHelper.sayHello(),
     });
   }
 }

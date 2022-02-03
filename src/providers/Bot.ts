@@ -1,8 +1,8 @@
 import { provide } from "inversify-binding-decorators";
 
-@provide(Bot)
-export class Bot {
-  public sayHello(): void {
-    console.log("hello!");
+@provide(BotHelper)
+export class BotHelper {
+  public sayHello(): string {
+    return "hello";
   }
 }
