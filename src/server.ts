@@ -1,15 +1,20 @@
+import "reflect-metadata"; //! this must be always first
+
 import express from "express";
+import { InversifyExpressServer } from "inversify-express-utils";
+import morgan from "morgan";
+import { container } from "./providers/inversify/container";
 
-import { serverRouter } from "./resources/server/server.routes";
-
-const app = express();
 
 const port = process.env.PORT || 5000;
 
-// Middlewares ========================================
+const server = new InversifyExpressServer(container);
 
-app.use(serverRouter);
-
-const server = app.listen(port, () => {
-  console.log(`⚙️ Server running on port ${port}`);
+server.setConfig((app) => {
+  // Middlewares ========================================
+  app.use(express.json());
+  app.use(morgan("dev"));
 });
+
+let app = server.build();
+app.listen(port);
