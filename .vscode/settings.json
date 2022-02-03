@@ -1,3 +1,16 @@
 {
-  "workbench.colorTheme": "Red One Dark Pro | Mirage Bordered"
+  "workbench.colorTheme": "Red One Dark Pro | Mirage Bordered",
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "version": "v1"
+    },
+    "development": {
+      "baseUrl": "http://127.0.0.1:5000",
+      "authToken": ""
+    },
+    "production": {
+      "baseUrl": "https://api.example.com",
+      "authToken": ""
+    }
+  }
 }
