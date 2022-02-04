@@ -72,7 +72,15 @@
     "types": ["reflect-metadata"],
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@entities/*": ["entities/*"],
+      "@providers/*": ["providers/*"],
+      "@repositories/*": ["repositories/*"],
+      "@useCases/*": ["useCases/*"],
+      "@data/*": ["providers/data/*"]
+    }
   },
   "include": ["src/**/*.ts", "test/*.ts"],
   "exclude": ["node_modules", "dist"]

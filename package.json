@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
+    "dev": "yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config tsconfig-paths/register ./src/server.ts",
     "routes": "yarn dev --show-routes",
     "build": "tsc -p .",
     "start": "yarn build && yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
@@ -52,6 +52,7 @@
     "express": "^4.17.1",
     "lodash": "^4.17.21",
     "node-cron": "^3.0.0",
-    "prettyjson": "^1.2.5"
+    "prettyjson": "^1.2.5",
+    "tsconfig-paths": "^3.12.0"
   }
 }
