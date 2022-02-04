@@ -1,0 +1,15 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "first post",
+      "tags": ["new", "cool"]
+    },
+    {
+      "id": 2,
+      "title": "second post",
+      "tags": ["tech"]
+    },
+    null
+  ]
+}

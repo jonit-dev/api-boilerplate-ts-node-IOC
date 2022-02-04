@@ -1,8 +1,9 @@
 import { localDbPath } from "@providers/constants/pathConstants";
+import { NotFoundError } from "@providers/errors/NotFoundError";
 import { provide } from "inversify-binding-decorators";
-import _ from "lodash";
 import { JsonDB } from "node-json-db";
 import { Config } from "node-json-db/dist/lib/JsonDBConfig";
+import sift from "sift";
 
 @provide(JSONDatabase)
 export class JSONDatabase {
@@ -12,13 +13,40 @@ export class JSONDatabase {
     this.db = new JsonDB(new Config(`${localDbPath}/dev-database`, true, false, "/"));
   }
 
-  public readAll<T>(dataPath: string): T[] {
-    return this.db.getData(dataPath);
+  public readAll<T>(dataPath: string, query: Record<string, unknown>): T[] {
+    try {
+      return this.db.getData(dataPath)[dataPath].filter(sift(query.filter));
+    } catch (error) {
+      console.error(error);
+      throw new NotFoundError(`No data found for ${dataPath}`);
+    }
   }
 
   public readOne<T>(dataPath: string, query: Record<string, unknown>): T {
     const data = this.db.getData(dataPath);
 
-    return _.find(data[dataPath], query);
+    return data[dataPath].filter(sift(query))[0];
+  }
+
+  public updateOne<T>(dataPath: string, id: string, updateData: Record<string, unknown>): T {
+    const index = this.getIndex(dataPath, id);
+
+    this.db.push(`/${dataPath}/${index}`, updateData, false);
+
+    return this.readOne(dataPath, { id: Number(id) });
+  }
+
+  public deleteOne(dataPath: string, id: string): void {
+    const index = this.getIndex(dataPath, id);
+
+    this.db.delete(`/${dataPath}/${index}`);
+  }
+
+  private getIndex(dataPath: string, id: string): number {
+    return this.db.getData(dataPath)[dataPath].findIndex(
+      sift({
+        id: Number(id),
+      })
+    );
   }
 }

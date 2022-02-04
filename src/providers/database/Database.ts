@@ -11,11 +11,19 @@ export class Database {
     };
   }
 
-  public async readAll<T>(document: string): Promise<T[]> {
-    return await this.config.adapter.readAll(document);
+  public async readAll<T>(collection: string, query: Record<string, unknown>): Promise<T[]> {
+    return await this.config.adapter.readAll(collection, query);
   }
 
-  public async readOne<T>(document: string, query: Record<string, unknown>): Promise<T[]> {
-    return await this.config.adapter.readOne(document, query);
+  public async readOne<T>(collection: string, query: Record<string, unknown>): Promise<T[]> {
+    return await this.config.adapter.readOne(collection, query);
+  }
+
+  public async updateOne<T>(collection: string, id: string, updatedPost: T): Promise<T[]> {
+    return await this.config.adapter.updateOne(collection, id, updatedPost);
+  }
+
+  public async deleteOne(collection: string, id: string): Promise<void> {
+    return await this.config.adapter.deleteOne(collection, id);
   }
 }

@@ -1,7 +1,7 @@
 
 
 # Post :: Read All
-GET {{baseUrl}}/posts HTTP/1.1
+GET {{baseUrl}}/posts?tags=new HTTP/1.1
 content-type: application/json
  
 ###
@@ -9,4 +9,19 @@ content-type: application/json
 # Post :: Read One
 GET {{baseUrl}}/posts/1 HTTP/1.1
 content-type: application/json
- 
+
+###
+
+# Post :: Update One
+PATCH {{baseUrl}}/posts/3 HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Updated title 2"
+}
+
+###
+
+# Post :: Delete one 
+DELETE {{baseUrl}}/posts/3 HTTP/1.1
+content-type: application/json
