@@ -1,11 +1,11 @@
 import { Container } from "inversify";
 import { buildProviderModule } from "inversify-binding-decorators";
 import { ServerHelper } from "../server/ServerHelper";
-import { serverControllerContainer } from "./ControllersInversify";
+import { controllersContainer } from "./ControllersInversify";
 
 const container = new Container();
 
-container.load(serverControllerContainer, buildProviderModule());
+container.load(controllersContainer, buildProviderModule());
 
 export const serverHelper = container.get<ServerHelper>(ServerHelper);
 

@@ -1,0 +1,12 @@
+
+
+# Post :: Read All
+GET {{baseUrl}}/posts HTTP/1.1
+content-type: application/json
+ 
+###
+
+# Post :: Read One
+GET {{baseUrl}}/posts/1 HTTP/1.1
+content-type: application/json
+ 
