@@ -1,18 +1,24 @@
-import * as express from "express";
+import { Request, Response } from "express";
 import { controller, httpGet, interfaces, request, response } from "inversify-express-utils";
 import { BotHelper } from "../../../providers/Bot";
+import { apiCache } from "../../../providers/constants/cacheConstants";
+import { HttpStatus } from "../../../types/ServerTypes";
 
 @controller("/")
 export class ServerController implements interfaces.Controller {
   constructor(private botHelper: BotHelper) {}
 
-  @httpGet("/")
-  private index(
-    @request() req: express.Request,
-    @response() res: express.Response
-  ): express.Response<any, Record<string, any>> {
+  @httpGet("hello")
+  private index(@request() req: Request, @response() res: Response): Response<any> {
     return res.status(200).send({
       message: this.botHelper.sayHello(),
+    });
+  }
+
+  @httpGet("cache", apiCache("1 hour"))
+  private cachedRoute(@request() req: Request, @response() res: Response): Response<any> {
+    return res.status(HttpStatus.OK).send({
+      message: "This route is cached",
     });
   }
 }

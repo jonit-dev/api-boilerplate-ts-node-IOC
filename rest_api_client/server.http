@@ -1,5 +1,5 @@
 
 
 # Server :: example
-GET {{baseUrl}}/ HTTP/1.1
+GET {{baseUrl}}/cache HTTP/1.1
 content-type: application/json
