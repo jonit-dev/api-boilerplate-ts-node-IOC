@@ -1,4 +1,4 @@
-import { HttpStatus } from "../../types/ServerTypes";
+import { HttpStatus } from "types/ServerTypes";
 import { ApplicationError } from "./ApplicationError";
 
 export class NotFoundError extends ApplicationError {
