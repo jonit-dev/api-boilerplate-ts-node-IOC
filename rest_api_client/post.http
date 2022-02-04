@@ -1,6 +1,22 @@
+# Post :: Create
+POST {{baseUrl}}/posts HTTP/1.1
+content-type: application/json
+ 
+{
+  "title": "new post",
+  "body": "new post body",
+  "tags": ["tag1", "tag2"]
+}
 
+###
 
 # Post :: Read All
+GET {{baseUrl}}/posts HTTP/1.1
+content-type: application/json
+ 
+###
+
+# Post :: Read All with query (check mongoose-query-parser library)
 GET {{baseUrl}}/posts?tags=new HTTP/1.1
 content-type: application/json
  

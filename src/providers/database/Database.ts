@@ -11,6 +11,10 @@ export class Database {
     };
   }
 
+  public async create<T>(collection: string, data: T): Promise<T[]> {
+    return await this.config.adapter.create(collection, data);
+  }
+
   public async readAll<T>(collection: string, query: Record<string, unknown>): Promise<T[]> {
     return await this.config.adapter.readAll(collection, query);
   }

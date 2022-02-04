@@ -43,7 +43,8 @@
     "pretty-quick": "^3.1.3",
     "reflect-metadata": "^0.1.13",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "uuid": "^8.3.2"
   },
   "dependencies": {
     "apicache-plus": "^2.3.1",

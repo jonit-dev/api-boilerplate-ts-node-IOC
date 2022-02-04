@@ -6,6 +6,7 @@ import {
   httpDelete,
   httpGet,
   httpPatch,
+  httpPost,
   interfaces,
   request,
   requestBody,
@@ -17,6 +18,15 @@ import { IPost } from "types/PostTypes";
 @controller("/posts")
 export class PostController implements interfaces.Controller {
   constructor(private database: Database) {}
+
+  @httpPost("/")
+  private async create(
+    @request() req: Request,
+    @response() res: Response,
+    @requestBody() post: IPost
+  ): Promise<IPost[]> {
+    return await this.database.create("posts", post);
+  }
 
   @httpGet("/", mongooseQueryParserMiddleware)
   private async readAll(@request() req: Request, @response() res: Response): Promise<IPost[]> {

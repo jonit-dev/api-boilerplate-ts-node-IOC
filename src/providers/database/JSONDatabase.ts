@@ -4,6 +4,7 @@ import { provide } from "inversify-binding-decorators";
 import { JsonDB } from "node-json-db";
 import { Config } from "node-json-db/dist/lib/JsonDBConfig";
 import sift from "sift";
+import { v4 as uuidv4 } from "uuid";
 
 @provide(JSONDatabase)
 export class JSONDatabase {
@@ -11,6 +12,17 @@ export class JSONDatabase {
 
   constructor() {
     this.db = new JsonDB(new Config(`${localDbPath}/dev-database`, true, false, "/"));
+  }
+
+  public create<T>(dataPath: string, data: Record<string, unknown>): T {
+    this.db.push(`/${dataPath}[]`, {
+      ...data,
+      id: uuidv4(),
+    });
+
+    const createdData = this.readOne<T>(dataPath, { id: Number(data.id) });
+
+    return createdData;
   }
 
   public readAll<T>(dataPath: string, query: Record<string, unknown>): T[] {
