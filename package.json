@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config tsconfig-paths/register ./src/server.ts",
+    "dev": "yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r tsconfig-paths/register ./src/server.ts",
     "routes": "yarn dev --show-routes",
     "build": "tsc -p .",
     "start": "yarn build && yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
