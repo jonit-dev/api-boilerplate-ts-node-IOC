@@ -17,19 +17,19 @@ content-type: application/json
 ###
 
 # Post :: Read All with query (check mongoose-query-parser library)
-GET {{baseUrl}}/posts?tags=new HTTP/1.1
+GET {{baseUrl}}/posts?tags=hot HTTP/1.1
 content-type: application/json
  
 ###
 
 # Post :: Read One
-GET {{baseUrl}}/posts/1 HTTP/1.1
+GET {{baseUrl}}/posts/7086e67f-791f-48ee-ae7f-61cf1cd1aa93 HTTP/1.1
 content-type: application/json
 
 ###
 
 # Post :: Update One
-PATCH {{baseUrl}}/posts/3 HTTP/1.1
+PATCH {{baseUrl}}/posts/7086e67f-791f-48ee-ae7f-61cf1cd1aa93 HTTP/1.1
 content-type: application/json
 
 {
@@ -39,5 +39,5 @@ content-type: application/json
 ###
 
 # Post :: Delete one 
-DELETE {{baseUrl}}/posts/3 HTTP/1.1
+DELETE {{baseUrl}}/posts/7086e67f-791f-48ee-ae7f-61cf1cd1aa93 HTTP/1.1
 content-type: application/json

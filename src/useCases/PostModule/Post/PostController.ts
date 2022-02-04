@@ -1,4 +1,5 @@
 import { Database } from "@providers/database/Database";
+import { DTOValidatorMiddleware } from "@providers/middlewares/DTOValidatorMiddleware";
 import { mongooseQueryParserMiddleware } from "@providers/middlewares/MongoseQueryParserMiddleware";
 import { Request, Response } from "express";
 import {
@@ -14,16 +15,17 @@ import {
   response,
 } from "inversify-express-utils";
 import { IPost } from "types/PostTypes";
+import { CreatePostDTO, UpdatePostDTO } from "./PostDTO";
 
 @controller("/posts")
 export class PostController implements interfaces.Controller {
   constructor(private database: Database) {}
 
-  @httpPost("/")
+  @httpPost("/", DTOValidatorMiddleware(CreatePostDTO))
   private async create(
     @request() req: Request,
     @response() res: Response,
-    @requestBody() post: IPost
+    @requestBody() post: CreatePostDTO
   ): Promise<IPost[]> {
     return await this.database.create("posts", post);
   }
@@ -41,15 +43,15 @@ export class PostController implements interfaces.Controller {
     @response() res: Response,
     @requestParam("id") postId
   ): Promise<IPost[]> {
-    return await this.database.readOne("posts", { id: Number(postId) });
+    return await this.database.readOne("posts", { id: postId });
   }
 
-  @httpPatch("/:id")
+  @httpPatch("/:id", DTOValidatorMiddleware(UpdatePostDTO))
   private async updateOne(
     @request() req: Request,
     @response() res: Response,
     @requestParam("id") postId,
-    @requestBody() updatedPost: IPost
+    @requestBody() updatedPost: UpdatePostDTO
   ): Promise<IPost[]> {
     return await this.database.updateOne("posts", postId, updatedPost);
   }

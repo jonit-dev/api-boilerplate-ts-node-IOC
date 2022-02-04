@@ -15,14 +15,19 @@ export class JSONDatabase {
   }
 
   public create<T>(dataPath: string, data: Record<string, unknown>): T {
-    this.db.push(`/${dataPath}[]`, {
-      ...data,
-      id: uuidv4(),
-    });
+    try {
+      this.db.push(`/${dataPath}[]`, {
+        ...data,
+        id: uuidv4(),
+      });
 
-    const createdData = this.readOne<T>(dataPath, { id: Number(data.id) });
+      const createdData = this.readOne<T>(dataPath, { id: Number(data.id) });
 
-    return createdData;
+      return createdData;
+    } catch (error) {
+      console.error(error);
+      throw new NotFoundError(`Failed to create new document in ${dataPath}`);
+    }
   }
 
   public readAll<T>(dataPath: string, query: Record<string, unknown>): T[] {
@@ -35,30 +40,51 @@ export class JSONDatabase {
   }
 
   public readOne<T>(dataPath: string, query: Record<string, unknown>): T {
-    const data = this.db.getData(dataPath);
+    try {
+      const data = this.db.getData(dataPath);
 
-    return data[dataPath].filter(sift(query))[0];
+      return data[dataPath].filter(sift(query))[0];
+    } catch (error) {
+      console.error(error);
+      throw new NotFoundError(`No data found for ${dataPath}`);
+    }
   }
 
   public updateOne<T>(dataPath: string, id: string, updateData: Record<string, unknown>): T {
-    const index = this.getIndex(dataPath, id);
+    try {
+      const index = this.getIndex(dataPath, id);
 
-    this.db.push(`/${dataPath}/${index}`, updateData, false);
+      this.db.push(`/${dataPath}/${index}`, updateData, false);
 
-    return this.readOne(dataPath, { id: Number(id) });
+      return this.readOne(dataPath, { id: id });
+    } catch (error) {
+      console.error(error);
+      throw new NotFoundError(`Failed to update data for ${dataPath}/${id}`);
+    }
   }
 
   public deleteOne(dataPath: string, id: string): void {
-    const index = this.getIndex(dataPath, id);
+    try {
+      const index = this.getIndex(dataPath, id);
 
-    this.db.delete(`/${dataPath}/${index}`);
+      this.db.delete(`/${dataPath}/${index}`);
+    } catch (error) {
+      console.error(error);
+      throw new NotFoundError(`Failed to delete data for ${dataPath}/${id}`);
+    }
   }
 
   private getIndex(dataPath: string, id: string): number {
-    return this.db.getData(dataPath)[dataPath].findIndex(
+    const index = this.db.getData(dataPath)[dataPath].findIndex(
       sift({
-        id: Number(id),
+        id: id,
       })
     );
+
+    if (index === -1) {
+      throw new NotFoundError(`No data found for ${dataPath}/${id}`);
+    }
+
+    return index;
   }
 }
