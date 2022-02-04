@@ -29,7 +29,7 @@ content-type: application/json
 ###
 
 # Post :: Update One
-PATCH {{baseUrl}}/posts/7086e67f-791f-48ee-ae7f-61cf1cd1aa93 HTTP/1.1
+PATCH {{baseUrl}}/posts/7086e67fss-791f-48ee-ae7f-61cf1cd1aa93 HTTP/1.1
 content-type: application/json
 
 {

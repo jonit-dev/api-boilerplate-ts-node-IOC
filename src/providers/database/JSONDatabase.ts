@@ -40,14 +40,15 @@ export class JSONDatabase {
   }
 
   public readOne<T>(dataPath: string, query: Record<string, unknown>): T {
-    try {
-      const data = this.db.getData(dataPath);
+    const data = this.db.getData(dataPath);
 
-      return data[dataPath].filter(sift(query))[0];
-    } catch (error) {
-      console.error(error);
+    const results = data[dataPath].filter(sift(query))[0];
+
+    if (!results) {
       throw new NotFoundError(`No data found for ${dataPath}`);
     }
+
+    return results;
   }
 
   public updateOne<T>(dataPath: string, id: string, updateData: Record<string, unknown>): T {
@@ -59,7 +60,7 @@ export class JSONDatabase {
       return this.readOne(dataPath, { id: id });
     } catch (error) {
       console.error(error);
-      throw new NotFoundError(`Failed to update data for ${dataPath}/${id}`);
+      throw new NotFoundError(`Failed to update data for ${dataPath} id ${id}`);
     }
   }
 
@@ -70,7 +71,7 @@ export class JSONDatabase {
       this.db.delete(`/${dataPath}/${index}`);
     } catch (error) {
       console.error(error);
-      throw new NotFoundError(`Failed to delete data for ${dataPath}/${id}`);
+      throw new NotFoundError(`Failed to delete data for ${dataPath} id ${id}`);
     }
   }
 
@@ -82,7 +83,7 @@ export class JSONDatabase {
     );
 
     if (index === -1) {
-      throw new NotFoundError(`No data found for ${dataPath}/${id}`);
+      throw new NotFoundError(`No data found for ${dataPath} id ${id}`);
     }
 
     return index;

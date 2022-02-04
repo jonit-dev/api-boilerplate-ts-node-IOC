@@ -1,4 +1,4 @@
-import "reflect-metadata"; //! this must be always first
+import "reflect-metadata"; //! THIS IMPORT MUST ALWAYS COME FIRST. BEWARE VSCODE AUTO IMPORT SORT!!!
 import "dotenv/config";
 import "express-async-errors";
 
@@ -20,7 +20,6 @@ server.setConfig((app) => {
   app.use(express.json());
   app.use(morgan("dev"));
   app.use(express.static("public"));
-  app.use(errorHandlerMiddleware);
 
   serverHelper.showBootstrapMessage({ env: process.env.ENV, port: Number(port) });
 });
@@ -32,3 +31,5 @@ if (process.argv.includes("--show-routes")) {
   const routeInfo = getRouteInfo(container);
   console.log(prettyjson.render({ routes: routeInfo }));
 }
+
+app.use(errorHandlerMiddleware); //! This must come last, otherwise it fails to catch errors thrown

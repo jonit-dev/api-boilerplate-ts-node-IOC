@@ -6,11 +6,6 @@
       "tags": ["tag1", "tag2"],
       "id": "cddcd0eb-286f-477a-bbe0-d111695624ce"
     },
-    {
-      "title": "Updated title 2",
-      "body": "lets be creative",
-      "tags": ["hot", "cold"],
-      "id": "7086e67f-791f-48ee-ae7f-61cf1cd1aa93"
-    }
+    null
   ]
 }
