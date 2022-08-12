@@ -14,7 +14,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn build && yarn lint",
+      "pre-push": "yarn build && yarn lint && yarn test",
       "pre-commit": "pretty-quick --staged"
     }
   },
