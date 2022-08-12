@@ -5,7 +5,6 @@ module.exports = {
   setupFilesAfterEnv: ["dotenv/config", "./jest.setup.ts"],
   testPathIgnorePatterns: ["/node_modules/", "/dist/"],
   testMatch: ["**/**/__tests__/*.spec.ts"],
-  forceExit: true,
   moduleNameMapper: {
     "^@providers/(.*)$": "<rootDir>/src/providers/$1",
     "^@constants/(.*)$": "<rootDir>/src/constants/$1",
