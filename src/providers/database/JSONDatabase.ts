@@ -1,4 +1,5 @@
 import { localDbPath } from "@providers/constants/pathConstants";
+import { BadRequestError } from "@providers/errors/BadRequestError";
 import { NotFoundError } from "@providers/errors/NotFoundError";
 import { provide } from "inversify-binding-decorators";
 import { JsonDB } from "node-json-db";
@@ -16,17 +17,19 @@ export class JSONDatabase {
 
   public create<T>(dataPath: string, data: Record<string, unknown>): T {
     try {
+      const newId = uuidv4();
+
       this.db.push(`/${dataPath}[]`, {
         ...data,
-        id: uuidv4(),
+        id: newId,
       });
 
-      const createdData = this.readOne<T>(dataPath, { id: Number(data.id) });
+      const createdData = this.db.getData(dataPath)[dataPath].find((item) => item.id === newId);
 
       return createdData;
     } catch (error) {
       console.error(error);
-      throw new NotFoundError(`Failed to create new document in ${dataPath}`);
+      throw new BadRequestError(`Database(create): Failed to create new document in ${dataPath}`);
     }
   }
 
@@ -35,7 +38,9 @@ export class JSONDatabase {
       return this.db.getData(dataPath)[dataPath].filter(sift(query.filter));
     } catch (error) {
       console.error(error);
-      throw new NotFoundError(`No data found for ${dataPath}`);
+      throw new NotFoundError(
+        `Database(readAll): No data found for ${dataPath} using the query ${JSON.stringify(query)}`
+      );
     }
   }
 
@@ -45,7 +50,9 @@ export class JSONDatabase {
     const results = data[dataPath].filter(sift(query))[0];
 
     if (!results) {
-      throw new NotFoundError(`No data found for ${dataPath}`);
+      throw new NotFoundError(
+        `Database(readOne): No data found for ${dataPath} using the query ${JSON.stringify(query)}`
+      );
     }
 
     return results;
@@ -60,7 +67,11 @@ export class JSONDatabase {
       return this.readOne(dataPath, { id: id });
     } catch (error) {
       console.error(error);
-      throw new NotFoundError(`Failed to update data for ${dataPath} id ${id}`);
+      throw new BadRequestError(
+        `Database(updateOne): Failed to update data for ${dataPath} id ${id} using the updateData: ${JSON.stringify(
+          updateData
+        )}`
+      );
     }
   }
 
@@ -71,7 +82,7 @@ export class JSONDatabase {
       this.db.delete(`/${dataPath}/${index}`);
     } catch (error) {
       console.error(error);
-      throw new NotFoundError(`Failed to delete data for ${dataPath} id ${id}`);
+      throw new BadRequestError(`Database(deleteOne): Failed to delete data for ${dataPath} id ${id}`);
     }
   }
 
@@ -83,7 +94,7 @@ export class JSONDatabase {
     );
 
     if (index === -1) {
-      throw new NotFoundError(`No data found for ${dataPath} id ${id}`);
+      throw new NotFoundError(`Daatabase(getIndex): No data found for ${dataPath} id ${id}`);
     }
 
     return index;

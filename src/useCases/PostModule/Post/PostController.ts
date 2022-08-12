@@ -26,8 +26,10 @@ export class PostController implements interfaces.Controller {
     @request() req: Request,
     @response() res: Response,
     @requestBody() post: CreatePostDTO
-  ): Promise<IPost[]> {
-    return await this.database.create("posts", post);
+  ): Promise<Response<IPost[]>> {
+    const newPost = await this.database.create("posts", post);
+
+    return res.status(201).send(newPost);
   }
 
   @httpGet("/", mongooseQueryParserMiddleware)

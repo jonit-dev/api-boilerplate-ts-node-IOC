@@ -1,6 +1,6 @@
 import { appEnv } from "@constants/appEnv";
 import axios from "axios";
-import { postsMock } from "./PostControllerMocks";
+import { createPostMock, readAllPostsMock } from "./PostControllerMocks";
 
 describe("PostController", () => {
   it("fetch available users", async () => {
@@ -8,6 +8,14 @@ describe("PostController", () => {
 
     const posts = response.data;
 
-    expect(posts).toStrictEqual(postsMock);
+    expect(posts).toStrictEqual(readAllPostsMock);
+  });
+
+  it("should properly create a new user", async () => {
+    const response = await axios.post(`${appEnv.general.apiURL}/posts`, createPostMock);
+
+    const newPost = response.data;
+
+    expect(newPost).toStrictEqual(createPostMock);
   });
 });

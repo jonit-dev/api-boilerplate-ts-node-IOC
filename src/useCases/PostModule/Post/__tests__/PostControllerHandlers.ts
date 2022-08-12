@@ -1,7 +1,9 @@
 import { appEnv } from "@constants/appEnv";
 import { rest } from "msw";
-import { postsMock } from "./PostControllerMocks";
+import { createPostMock, readAllPostsMock } from "./PostControllerMocks";
 
-const getAllPosts = rest.get(`${appEnv.general.apiURL}/posts`, (req, res, ctx) => res(ctx.json(postsMock)));
+const getAllPosts = rest.get(`${appEnv.general.apiURL}/posts`, (req, res, ctx) => res(ctx.json(readAllPostsMock)));
 
-export const postControllerHandlers = [getAllPosts];
+const createPost = rest.post(`${appEnv.general.apiURL}/posts`, (req, res, ctx) => res(ctx.json(createPostMock)));
+
+export const postControllerHandlers = [getAllPosts, createPost];

@@ -1,9 +1,6 @@
 export const errorHandlerMiddleware = function (err, req, res, next): any {
-  console.log("PEGOU NO MIDDLEWARE");
-
-  console.log(err.stack);
-
   if (err.statusCode) {
+    console.log(err.stack);
     return res.status(err.statusCode).send(err);
   }
 

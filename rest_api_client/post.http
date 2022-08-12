@@ -23,7 +23,7 @@ content-type: application/json
 ###
 
 # Post :: Read One
-GET {{baseUrl}}/posts/7086e67f-791f-48ee-ae7f-61cf1cd1aa93 HTTP/1.1
+GET {{baseUrl}}/posts/1ab97c9f-9e4e-473b-923d-9b08051255ec HTTP/1.1
 content-type: application/json
 
 ###
