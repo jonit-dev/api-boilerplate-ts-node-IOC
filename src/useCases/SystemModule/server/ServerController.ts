@@ -8,10 +8,10 @@ import { HttpStatus } from "types/ServerTypes";
 export class ServerController implements interfaces.Controller {
   constructor(private botHelper: BotHelper) {}
 
-  @httpGet("hello")
+  @httpGet("/")
   private index(@request() req: Request, @response() res: Response): Response<any> {
     return res.status(HttpStatus.OK).send({
-      message: this.botHelper.sayHello(),
+      message: "API is running successfully!",
     });
   }
 
