@@ -10,7 +10,8 @@
     "start": "yarn build && yarn install && ts-node-dev --ignore-watch ./node_modules --transpile-only --respawn -r dotenv/config ./src/server.ts",
     "lint": "eslint --fix ./src/**/*.ts",
     "format": "prettier --write . --loglevel silent",
-    "test": "jest"
+    "test": "jest",
+    "run:llama": "ts-node-dev --quiet ./src/environment/scripts/llama.ts"
   },
   "husky": {
     "hooks": {
@@ -23,9 +24,9 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.6",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^16.4.2",
+    "@types/node": "^18.15.11",
     "@types/node-json-db": "^0.9.3",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "axios": "^0.25.0",
     "eslint": "^7.13.0",
